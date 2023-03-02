@@ -8,7 +8,10 @@ import streamlit as st
 import streamlit.components.v1 as components
 from PIL import Image
 
-_RELEASE = True
+from typing import Callable, Optional
+from .components_callbacks import register_callback
+
+_RELEASE = False
 
 if not _RELEASE:
     _component_func = components.declare_component(
@@ -19,14 +22,14 @@ else:
     _component_func = components.declare_component("image_select", path=path)
 
 
-@st.experimental_memo
+@st.cache_data
 def _encode_file(img):
     with open(img, "rb") as img_file:
         encoded = base64.b64encode(img_file.read()).decode()
     return f"data:image/jpeg;base64, {encoded}"
 
 
-@st.experimental_memo
+@st.cache_data
 def _encode_numpy(img):
     pil_img = Image.fromarray(img)
     buffer = io.BytesIO()
@@ -43,7 +46,8 @@ def image_select(
     *,
     use_container_width: bool = True,
     return_value: str = "original",
-    key: str = None,
+    key: str = "image_select_key",
+    on_change: Optional[Callable] = None,
 ):
     """Shows several images and returns the image selected by the user.
 
@@ -61,9 +65,10 @@ def image_select(
             original object passed into `images` or the index of the selected image.
             Defaults to "original".
         key (str, optional): The key of the component. Defaults to None.
+        on_change (callable, optional): An optional callback invoked when this image select box's value changes.
 
     Returns:
-        (any): The image selected by the user (same object and type as passed to
+        (any): The image selected keyby the user (same object and type as passed to
             `images`).
     """
 
@@ -90,6 +95,12 @@ def image_select(
             encoded_images.append(_encode_file(img))
         else:  # url, use directly
             encoded_images.append(img)
+
+    def callback():
+        if on_change:
+            on_change()
+
+    register_callback(element_key=key, callback=callback)
 
     # Pass everything to the frontend.
     component_value = _component_func(
