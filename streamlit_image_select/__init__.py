@@ -46,6 +46,7 @@ def image_select(
     *,
     use_container_width: bool = True,
     return_value: str = "original",
+    disabled: bool = False,
     key: str = "image_select_key",
     on_change: Optional[Callable] = None,
 ):
@@ -64,7 +65,10 @@ def image_select(
         return_value ("original" or "index", optional): Whether to return the
             original object passed into `images` or the index of the selected image.
             Defaults to "original".
-        key (str, optional): The key of the component. Defaults to None.
+        disabled (bool, optional): An optional boolean, which disables the radio button if set to
+            True. The default is False. This argument can only be supplied by
+            keyword.
+        key (str, optional): The key of the component. Defaults to "image_select_key".
         on_change (callable, optional): An optional callback invoked when this image select box's value changes.
 
     Returns:
@@ -109,6 +113,7 @@ def image_select(
         captions=captions,
         index=index,
         use_container_width=use_container_width,
+        disabled=disabled,
         key=key,
         default=index,
     )
