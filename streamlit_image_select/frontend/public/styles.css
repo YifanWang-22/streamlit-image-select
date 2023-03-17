@@ -82,6 +82,15 @@ label {
     /* filter: brightness(1.1); */
 }
 
+.image-box.disabled {
+    display: block;
+    pointer-events: none;
+    opacity: 0.65;
+    padding: 0.25rem;
+    cursor: not-allowed;
+    color: #fff;
+}
+
 .caption {
     margin-top: 0.25rem;
     font-weight: 400;

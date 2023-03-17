@@ -33,6 +33,7 @@ function onRender(event: Event): void {
   label.textContent = data.args["label"]
   let images = data.args["images"]
   let captions = data.args["captions"]
+  let disabled = data.args["disabled"]
   // console.log(captions)
 
   if (container.childNodes.length === 0) {
@@ -69,7 +70,25 @@ function onRender(event: Event): void {
         box.classList.add("selected")
         img.classList.add("selected")
       }
+
+      if (disabled) {
+        box.classList.add("disabled")
+      }
     })
+  }
+
+  else {
+    if (disabled) {
+      container.querySelectorAll(".image-box").forEach((el) => {
+        el.classList.add("disabled")
+      })
+    }
+
+    else {
+      container.querySelectorAll(".image-box").forEach((el) => {
+          el.classList.remove("disabled")
+      })
+    }
   }
 
   // We tell Streamlit to update our frameHeight after each render event, in
