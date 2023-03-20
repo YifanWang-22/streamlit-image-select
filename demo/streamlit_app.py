@@ -4,9 +4,13 @@ import os
 import numpy as np
 import requests
 import streamlit as st
+st.set_page_config("Demo for streamlit-image-select", "🖼️")
 from PIL import Image
 
 from streamlit_image_select import image_select
+
+def on_change_test():
+    print("on_change callback")
 
 
 def add_sunglasses(img, position):
@@ -28,7 +32,6 @@ def add_sunglasses(img, position):
     return pil_img
 
 
-st.set_page_config("Demo for streamlit-image-select", "🖼️")
 
 
 st.write(
@@ -50,6 +53,16 @@ arrays. You can also add captions (optional)!
 with st.echo():
     from streamlit_image_select import image_select
 
+    if 'disabled' not in st.session_state:
+        st.session_state.disabled = True
+
+    def flipState():
+        st.session_state.disabled = False if st.session_state.disabled else True
+    st.button('Disable/Enable image_select', on_click=flipState)
+    state = 'Disabled' if st.session_state.disabled else 'Enabled'
+    st.write('The widget image_select is now: {}'.format(state))
+
+
     img = image_select(
         label="Select a cat",
         images=[
@@ -59,6 +72,8 @@ with st.echo():
             np.array(Image.open("images/cat4.jpeg")),
         ],
         captions=["A cat", "Another cat", "Oh look, a cat!", "Guess what, a cat..."],
+        disabled=st.session_state.disabled,
+        on_change=on_change_test,
     )
 
 # st.file_uploader("Or upload your own cat!", type=["jpg", "jpeg", "png"])
