@@ -118,6 +118,10 @@ poetry publish
 
 ## Changelog
 
+### 0.5.2 (March 20, 2023)
+- Added `on_change` parameter to change the state of the widget when its value changes.
+- Added `disabled` parameter to disable the widget if set to False.
+
 ### 0.5.1 (November 20, 2022)
 - Hotfix, forgot to switch the RELEASE variable back to True :wink:
 
