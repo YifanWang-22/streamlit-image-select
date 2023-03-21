@@ -11,7 +11,7 @@ from PIL import Image
 from typing import Callable, Optional
 from .components_callbacks import register_callback
 
-_RELEASE = False
+_RELEASE = True
 
 if not _RELEASE:
     _component_func = components.declare_component(
