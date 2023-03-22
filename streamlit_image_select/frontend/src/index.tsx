@@ -73,6 +73,7 @@ function onRender(event: Event): void {
 
       if (disabled) {
         box.classList.add("disabled")
+        img.classList.add("disabled")
       }
     })
   }
@@ -82,11 +83,17 @@ function onRender(event: Event): void {
       container.querySelectorAll(".image-box").forEach((el) => {
         el.classList.add("disabled")
       })
+      container.querySelectorAll(".image").forEach((el) => {
+        el.classList.add("disabled")
+      })
     }
 
     else {
       container.querySelectorAll(".image-box").forEach((el) => {
-          el.classList.remove("disabled")
+        el.classList.remove("disabled")
+      })
+      container.querySelectorAll(".image").forEach((el) => {
+        el.classList.remove("disabled")
       })
     }
   }
